@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
+import Spotify from "next-auth/providers/spotify";
 
 const handler = NextAuth({
   secret: process.env.AUTH_SECRET,
@@ -49,6 +50,10 @@ const handler = NextAuth({
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }),
+    Spotify({
+      clientId: process.env.SPOTIFY_CLIENT_ID!,
+      clientSecret: process.env.SPOTIFY_CLIENT_SECRET!,
+    })
   ],
   pages: {
     signIn: "/login",

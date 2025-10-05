@@ -10,7 +10,6 @@ export default function Home() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
   const { data: session, status } = useSession();
 
   if (status === "loading") {
@@ -30,7 +29,6 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    setSuccess(false);
 
     if (!email.trim()) {
       setError("Please enter your email.");
@@ -146,7 +144,7 @@ export default function Home() {
               aria-label="Sign in with Google"
               title="Sign in with Google"
               className="bg-white/50 hover:bg-white/80 focus-visible:ring-2 focus-visible:ring-sky-500 outline-none transition-all rounded-lg shadow-md focus:shadow-xl text-gray-800 w-full p-3 font-semibold cursor-pointer flex items-center justify-center gap-2"
-              onClick={() => signIn("google")}
+              onClick={() => signIn("google", { redirect: false})}
             >
               <svg
                 className="w-5 h-5"
@@ -188,7 +186,7 @@ export default function Home() {
               aria-label="Sign in with Apple"
               title="Sign in with Apple"
               className="bg-white/50 hover:bg-white/80 focus-visible:ring-2 focus-visible:ring-sky-500 outline-none transition-all rounded-lg shadow-md focus:shadow-xl text-gray-800 w-full p-3 font-semibold cursor-pointer flex items-center justify-center gap-2"
-              onClick={() => alert("Apple sign-in not implemented.")}
+              onClick={() => alert("Apple sign-in requires Apple Developer Account that costs $99 dollars a year 😅.")}
             >
               <svg
                 className="w-5 h-5"
@@ -201,6 +199,26 @@ export default function Home() {
                 <path d="M318.7 268.7c-.2-36.7 16-64.4 50.4-84.8-19-27.6-47.8-42.8-85.4-45.8-35.9-2.9-75.3 21.1-89.3 21.1-14.4 0-47.4-20.1-73.5-20.1C71.4 139 0 193.4 0 301.7c0 54.8 20.2 113.6 45.1 151.3 21.2 31.9 46.3 67.6 79.6 66.3 31.8-1.2 43.9-20.8 82.3-20.8 38.3 0 49.1 20.8 83.4 20.1 34.5-.7 56.2-32.5 77.3-64.7 24.2-36.5 34.2-71.7 34.5-73.5-0.8-0.3-66.1-25.4-66.5-101.7zm-60.4-182.2c27.2-32.8 24.7-62.4 24-73.5-23.5 1.4-50.6 15.8-66.5 34.6-17.6 20.5-27.9 45.9-25.7 73.5 26.2 2 51-11.2 68.2-34.6z"/>
               </svg>
             </button>
+
+            {/* Spotify */}
+            <button
+              type="button"
+              aria-label="Sign in with Spotify"
+              title="Sign in with Spotify"
+              className="bg-white/50 hover:bg-white/80 focus-visible:ring-2 focus-visible:ring-sky-500 outline-none transition-all rounded-lg shadow-md focus:shadow-xl text-gray-800 w-full p-3 font-semibold cursor-pointer flex items-center justify-center gap-2"
+              onClick={() => signIn("spotify")}
+            >
+              <svg
+                className="w-5 h-5"
+                viewBox="0 0 496 512"
+                fill="#1DB954"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                aria-hidden="true"
+              >
+                <path d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm100.7 364.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z"/>
+              </svg>
+            </button>
           </div>
 
 
@@ -210,11 +228,6 @@ export default function Home() {
           </p>
           )}
 
-          {success && (
-            <p className="mt-4 text-sm text-green-700" role="status">
-              Successfully signed in (mock).
-            </p>
-          )}
         </div>
       </form>
     </div>
