@@ -3,6 +3,7 @@
 import { signIn, useSession } from "next-auth/react";
 import React, { useState } from "react";
 import './styles.css';
+import Link from "next/link";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -228,6 +229,14 @@ export default function Home() {
           </p>
           )}
 
+          <div className="mt-4 text-sm text-gray-500 text-center flex justify-between">
+            <div className="underline cursor-pointer hover:text-gray-900" onClick={() => alert("Requires dedicated system, placeholder for now. \n\n Use these creds -\n Username - test@gmail.com, Password - password")}>
+              Reset password
+            </div>
+            <Link href="/signup" className="underline hover:text-gray-900">
+              Create new account
+            </Link>
+          </div>
         </div>
       </form>
     </div>

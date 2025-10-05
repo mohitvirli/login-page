@@ -22,9 +22,10 @@ const handler = NextAuth({
         // Mock check (replace with DB lookup in production)
         const mockUser = {
           id: "1",
-          name: "Test User",
-          password: "password123",
-          email: "test@example.com",
+          image: "/avatar.png",
+          name: "Mohit Virli",
+          password: "password",
+          email: "test@gmail.com",
         };
 
         if (
@@ -33,6 +34,7 @@ const handler = NextAuth({
         ) {
           return {
             id: mockUser.id,
+            image: mockUser.image,
             name: mockUser.name,
             email: mockUser.email,
           };
