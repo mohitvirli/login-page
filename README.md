@@ -2,6 +2,8 @@
 
 This is a small demo Next.js application showcasing an authentication flow using NextAuth (credentials + OAuth providers) and a polished login UI built with Tailwind-like classes and custom styles.
 
+<img width="2364" height="1806" alt="image" src="https://github.com/user-attachments/assets/999c198e-76f1-4bad-bc37-63ff254c52ca" />
+
 ### Key points
 - Next.js 14+ app router (app/ directory).
 - Authentication handled by NextAuth in `app/api/auth/[...nextauth]/route.ts`.
