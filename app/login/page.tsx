@@ -1,5 +1,6 @@
 "use client";
 
+import { signIn, useSession } from "next-auth/react";
 import React, { useState } from "react";
 import './styles.css';
 
@@ -10,6 +11,16 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <div className="flex font-mono items-center justify-center h-[100dvh]">Loading...</div>;
+  }
+
+  if (session) {
+    window.location.href = "/";
+    return;
+  }
 
   const validateEmail = (value: string) => {
     // simple email regex for client-side validation
@@ -35,7 +46,20 @@ export default function Home() {
     }
 
     setLoading(true);
-    // Mock async login process
+
+    const res = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (res?.error) {
+      setError("Invalid username or password");
+    } else {
+      window.location.href = "/";
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -47,7 +71,7 @@ export default function Home() {
 
       <form
         onSubmit={handleSubmit}
-        className="z-20 backdrop-blur-md shadow-2xl rounded-xl p-8 md:p-8 flex flex-col md:flex-row items-center gap-8 md:gap-16 w-full max-w-lg"
+        className="z-20 backdrop-blur-sm shadow-2xl rounded-xl p-8 md:p-8 flex flex-col md:flex-row items-center gap-8 md:gap-16 w-full max-w-lg"
         aria-labelledby="login-heading"
       >
         <h2 id="login-heading" className="sr-only">Sign in to your account</h2>
@@ -122,7 +146,7 @@ export default function Home() {
               aria-label="Sign in with Google"
               title="Sign in with Google"
               className="bg-white/50 hover:bg-white/80 focus-visible:ring-2 focus-visible:ring-sky-500 outline-none transition-all rounded-lg shadow-md focus:shadow-xl text-gray-800 w-full p-3 font-semibold cursor-pointer flex items-center justify-center gap-2"
-              onClick={() => alert("Google sign-in not implemented.")}
+              onClick={() => signIn("google")}
             >
               <svg
                 className="w-5 h-5"
