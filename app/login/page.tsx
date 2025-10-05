@@ -3,17 +3,21 @@
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './styles.css';
 
 export default function Home() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { data: session, status } = useSession();
-  const router = useRouter();
+
+  const passwordRef = useRef<HTMLInputElement>(null);
+
 
   useEffect(() => {
     if (session) {
@@ -29,6 +33,13 @@ export default function Home() {
   const validateEmail = (value: string) => {
     // simple email regex for client-side validation
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  };
+
+  const handleEmailKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      passwordRef.current?.focus();
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -88,8 +99,10 @@ export default function Home() {
               name="email"
               type="email"
               value={email}
+              onKeyDown={handleEmailKeyDown}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
+              enterKeyHint="go"
               className="py-3 px-4 transition-all outline-0 w-full bg-white/40 rounded-lg shadow-md focus:shadow-xl  hover:bg-white/70 focus:bg-white/70 placeholder:text-gray-400"
               aria-invalid={!!error && (!email || !validateEmail(email))}
               aria-describedby={error ? "form-error" : undefined}
@@ -100,7 +113,9 @@ export default function Home() {
             <label htmlFor="password" className="sr-only">Password</label>
             <input
               id="password"
+              ref={passwordRef}
               name="password"
+              enterKeyHint="done"
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -234,7 +249,7 @@ export default function Home() {
           </p>
           )}
 
-          <div className="mt-4 text-sm text-gray-500 text-center flex justify-between">
+          <div className="mt-4 text-xs text-gray-500 text-center flex justify-between">
             <button
               type="button"
               className="underline cursor-pointer hover:text-gray-900 bg-transparent p-0 border-0"
