@@ -1,9 +1,10 @@
 "use client";
 
 import { signIn, useSession } from "next-auth/react";
-import React, { useState } from "react";
-import './styles.css';
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import './styles.css';
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -12,14 +13,17 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session) {
+      router.push('/');
+      return;
+    }
+  }, [session, router]);
 
   if (status === "loading") {
     return <div className="flex font-mono items-center justify-center h-[100dvh]">Loading...</div>;
-  }
-
-  if (session) {
-    window.location.href = "/";
-    return;
   }
 
   const validateEmail = (value: string) => {
@@ -55,7 +59,7 @@ export default function Home() {
     if (res?.error) {
       setError("Invalid username or password");
     } else {
-      window.location.href = "/";
+      router.push('/')
     }
 
     setLoading(false);
@@ -80,6 +84,7 @@ export default function Home() {
             <label htmlFor="email" className="sr-only">Email</label>
             <input
               id="email"
+              autoFocus
               name="email"
               type="email"
               value={email}
@@ -230,9 +235,13 @@ export default function Home() {
           )}
 
           <div className="mt-4 text-sm text-gray-500 text-center flex justify-between">
-            <div className="underline cursor-pointer hover:text-gray-900" onClick={() => alert("Requires dedicated system, placeholder for now. \n\n Use these creds -\n Username - test@gmail.com, Password - password")}>
+            <button
+              type="button"
+              className="underline cursor-pointer hover:text-gray-900 bg-transparent p-0 border-0"
+              onClick={() => alert("Requires dedicated system, placeholder for now. \n\n Use these creds - Username - test@gmail.com\n Password - password")}
+            >
               Reset password
-            </div>
+            </button>
             <Link href="/signup" className="underline hover:text-gray-900">
               Create new account
             </Link>
