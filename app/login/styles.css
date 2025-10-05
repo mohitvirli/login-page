@@ -1,0 +1,24 @@
+.title {
+  font-size: 20rem;
+  top: 8%;
+  left: 0;
+  opacity: 0.35;
+  letter-spacing: -2rem;
+  user-select: none;
+  width: 100%;
+  font-weight: 200;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 10rem;
+    top: 10%;
+    letter-spacing: -1rem;
+  }
+}
+
+
+.bg-overlay {
+  opacity: 0.5;
+  background-image: radial-gradient(#000 0.5px, #e5e5f7 0.5px);
+  background-size: 10px 10px;
+}
