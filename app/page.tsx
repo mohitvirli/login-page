@@ -16,6 +16,7 @@ export default function Home() {
     if (typeof window !== "undefined") {
       window.location.href = "/login";
     }
+    return null;
   }
   return (
     <div className="font-mono grid grid-rows-[20px_1fr_20px] items-center justify-items-center h-screen p-8 pb-20 gap-16 sm:p-20">

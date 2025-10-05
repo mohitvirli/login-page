@@ -168,7 +168,7 @@ export default function Home() {
               aria-label="Sign in with GitHub"
               title="Sign in with GitHub"
               className="bg-white/50 hover:bg-white/80 focus-visible:ring-2 focus-visible:ring-sky-500 outline-none transition-all rounded-lg shadow-md focus:shadow-xl text-gray-800 w-full p-3 font-semibold cursor-pointer flex items-center justify-center gap-2"
-              onClick={() => alert("GitHub sign-in not implemented.")}
+              onClick={() => signIn("github")}
             >
               <svg
                 className="w-5 h-5"
