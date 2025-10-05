@@ -20,6 +20,10 @@ export default function Home() {
     return <div className="flex font-mono items-center justify-center h-screen">Loading...</div>;
   }
 
+  if (!session) {
+    return <div className="flex font-mono items-center justify-center h-screen">User not logged in. Redirecting...</div>
+  }
+
   return (
     <div className="font-mono grid grid-rows-[20px_1fr_20px] items-center justify-items-center h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
